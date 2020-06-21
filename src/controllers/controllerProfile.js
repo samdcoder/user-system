@@ -1,27 +1,22 @@
+import {readCookie} from "../helper";
+
 var axios = require('axios');
-var qs = require('qs');
 
 export default (d, onSuccess) => {
-  const {userName: username, password, email, phone: contact} = d;
-  const data = qs.stringify({
-    username,
-    email,
-    password,
-    contact
-  });
-  
+  const access_token = readCookie('access_token');
   
   var config = {
     method: 'post',
-    url: 'http://localhost/php-mvc/user/register',
+    url: 'http://localhost/php-mvc/user/profile',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
+      'access_token': access_token
     },
-    data: data
   };
   
   axios(config)
     .then(function (response) {
+      console.log('response => ', response);
       onSuccess(response)
     })
     .catch(function (error) {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,12 +10,15 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import doLoginAction from "../actions/doLoginAction";
+import {Alert} from '@material-ui/lab';
+
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="https://github.com/sonu-verma">
         Sonu Verma
       </Link>{' '}
       {new Date().getFullYear()}
@@ -46,7 +49,24 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
-  
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+  const [loginStatus, setLoginStatus] = useState(-1);
+  // -1 is not tried, 0 is failed, 1 is passed, display error in case of 0
+  const onSubmit = (e) => {
+    e.preventDefault();
+    doLoginAction({userName, password}, onSuccess);
+  }
+  const onSuccess = (d) => {
+    const {data} = d;
+    const {status, token_id: access_token, user_id: userId} = data;
+    if (!status) {
+      setLoginStatus(-0);
+    } else {
+      document.cookie = `access_token=${access_token}`;
+      window.location = `/profile/${userId}`;
+    }
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline/>
@@ -61,6 +81,7 @@ export default function Login() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+                onChange={e => setUserName(e.target.value)}
                 autoComplete="uname"
                 name="userName"
                 variant="outlined"
@@ -69,10 +90,12 @@ export default function Login() {
                 id="userName"
                 label="Username"
                 autoFocus
+                value={userName}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                onChange={e => setPassword(e.target.value)}
                 variant="outlined"
                 required
                 fullWidth
@@ -81,10 +104,12 @@ export default function Login() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={password}
               />
             </Grid>
           </Grid>
           <Button
+            onClick={onSubmit}
             type="submit"
             fullWidth
             variant="contained"
@@ -97,6 +122,11 @@ export default function Login() {
       </div>
       <Box mt={5}>
         <Copyright/>
+        <br/><br/>
+        {loginStatus === 0 &&
+        <Alert variant="outlined" severity="error">
+          Incorrect Login Credentials
+        </Alert>}
       </Box>
     </Container>
   );

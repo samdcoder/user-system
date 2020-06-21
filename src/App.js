@@ -3,6 +3,7 @@ import './App.css';
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import ProfilePage from "./pages/ProfilePage";
 
 
 function App() {
@@ -15,8 +16,11 @@ function App() {
         <Route path="/login">
           <LoginPage/>
         </Route>
+        <Route path="/profile">
+          <ProfilePage/>
+        </Route>
         <Route path="/">
-          <LoginPage/>
+          <ProfilePage/>
         </Route>
       </Switch>
     </Router>
