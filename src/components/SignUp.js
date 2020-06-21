@@ -53,6 +53,11 @@ export default function SignUp() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   
+  const [userNameError, setUserNameError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [phoneError, setPhoneError] = useState('');
+  
   
   const onSubmit = (e) => {
     e.preventDefault();
@@ -62,19 +67,18 @@ export default function SignUp() {
   const onSuccess = (d) => {
     const {data} = d;
     const {errors} = data;
-    console.log('errors => ', errors);
     const {contactError, passwordError, emailError, usernameError} = errors;
     if (contactError.length) {
-      setPhone(contactError);
+      setPhoneError(contactError);
     }
     if (emailError.length) {
-      setEmail(emailError);
+      setEmailError(emailError);
     }
-    if (password.length) {
-      setPassword(passwordError);
+    if (passwordError.length) {
+      setPasswordError(passwordError);
     }
     if (usernameError.length) {
-      setUserName(usernameError);
+      setUserNameError(usernameError);
     }
     
   }
@@ -104,6 +108,9 @@ export default function SignUp() {
                 autoFocus
                 value={userName}
               />
+              <div style={{color: 'red'}}>
+                {userNameError}
+              </div>
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -118,6 +125,9 @@ export default function SignUp() {
                 autoComplete="current-password"
                 value={password}
               />
+              <div style={{color: 'red'}}>
+                {passwordError}
+              </div>
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -131,6 +141,9 @@ export default function SignUp() {
                 autoComplete="email"
                 value={email}
               />
+              <div style={{color: 'red'}}>
+                {emailError}
+              </div>
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -146,6 +159,9 @@ export default function SignUp() {
                 autoFocus
                 value={phone}
               />
+              <div style={{color: 'red'}}>
+                {phoneError}
+              </div>
             </Grid>
           </Grid>
           <Button

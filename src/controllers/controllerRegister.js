@@ -1,5 +1,5 @@
-const axios = require('axios');
-const qs = require('qs');
+var axios = require('axios');
+var qs = require('qs');
 
 export default (d, onSuccess) => {
   const {userName: username, password, email, phone: contact} = d;
@@ -10,7 +10,16 @@ export default (d, onSuccess) => {
     contact
   });
   
-  const config = {
+  // axios.post(url, data, {headers: headers})
+  //   .then(function (response) {
+  //     onSuccess(response)
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   });
+  //
+  
+  var config = {
     method: 'post',
     url: 'http://localhost/php-mvc/user/register',
     headers: {
@@ -21,7 +30,7 @@ export default (d, onSuccess) => {
   
   axios(config)
     .then(function (response) {
-      console.log(JSON.stringify(response.data));
+      onSuccess(response)
     })
     .catch(function (error) {
       console.log(error);
