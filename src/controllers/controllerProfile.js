@@ -1,27 +1,29 @@
 import {readCookie} from "../helper";
 
 var axios = require('axios');
+var qs = require('qs');
+var data = qs.stringify({});
 
 export default (d, onSuccess) => {
-  const access_token = readCookie('access_token');
-  
+  const userId = readCookie('user_id');
   var config = {
     method: 'post',
-    url: 'http://localhost/php-mvc/user/profile',
+    url: `http://localhost/php-mvc/user/profile/${userId}`,
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'access_token': access_token
+      'x-access_token': readCookie('access_token'),
     },
+    data: {}
   };
   
   axios(config)
     .then(function (response) {
-      console.log('response => ', response);
+      console.log(JSON.stringify(response.data));
       onSuccess(response)
     })
     .catch(function (error) {
       console.log(error);
     });
+  
   
 }
 

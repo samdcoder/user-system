@@ -12,6 +12,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import doLoginAction from "../actions/doLoginAction";
 import {Alert} from '@material-ui/lab';
+import {setCookie} from "../helper";
 
 
 function Copyright() {
@@ -63,7 +64,8 @@ export default function Login() {
     if (!status) {
       setLoginStatus(-0);
     } else {
-      document.cookie = `access_token=${access_token}`;
+      setCookie('access_token', access_token);
+      setCookie('user_id', userId);
       window.location = `/profile/${userId}`;
     }
   }
