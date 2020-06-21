@@ -1,6 +1,6 @@
 import controllerRegister from "../controllers/controllerRegister";
 
-export default (data) => {
+export default (data, onSuccess) => {
   //make call to the controller
-  controllerRegister(data);
+  controllerRegister(data, onSuccess);
 }

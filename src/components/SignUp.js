@@ -56,11 +56,27 @@ export default function SignUp() {
   
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log('userName => ', userName);
-    console.log('userName => ', password);
-    console.log('userName => ', email);
-    console.log('userName => ', phone);
-    doRegisterAction({userName, password, email, phone})
+    doRegisterAction({userName, password, email, phone}, onSuccess);
+  }
+  
+  const onSuccess = (d) => {
+    const {data} = d;
+    const {errors} = data;
+    console.log('errors => ', errors);
+    const {contactError, passwordError, emailError, usernameError} = errors;
+    if (contactError.length) {
+      setPhone(contactError);
+    }
+    if (emailError.length) {
+      setEmail(emailError);
+    }
+    if (password.length) {
+      setPassword(passwordError);
+    }
+    if (usernameError.length) {
+      setUserName(usernameError);
+    }
+    
   }
   
   return (
@@ -86,6 +102,7 @@ export default function SignUp() {
                 id="userName"
                 label="Username"
                 autoFocus
+                value={userName}
               />
             </Grid>
             <Grid item xs={12}>
@@ -99,6 +116,7 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={password}
               />
             </Grid>
             <Grid item xs={12}>
@@ -111,6 +129,7 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={email}
               />
             </Grid>
             <Grid item xs={12}>
@@ -125,6 +144,7 @@ export default function SignUp() {
                 id="phoneNumber"
                 label="Phone"
                 autoFocus
+                value={phone}
               />
             </Grid>
           </Grid>

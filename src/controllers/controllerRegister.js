@@ -1,23 +1,31 @@
-const axios = require('axios').default;
+const axios = require('axios');
+const qs = require('qs');
 
-export default (d) => {
-  console.log('data in controller => ', d)
+export default (d, onSuccess) => {
   const {userName: username, password, email, phone: contact} = d;
-  const url = 'http://localhost/php-mvc/user/register';
-  const headers = {'content-type': 'application/x-www-form-urlencoded'};
-  const data = {
-    headers,
+  const data = qs.stringify({
     username,
     email,
     password,
     contact
+  });
+  
+  const config = {
+    method: 'post',
+    url: 'http://localhost/php-mvc/user/register',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    data: data
   };
   
-  axios.post(url, data, {headers: headers})
+  axios(config)
     .then(function (response) {
-      console.log(response);
+      console.log(JSON.stringify(response.data));
     })
     .catch(function (error) {
       console.log(error);
     });
+  
 }
+
