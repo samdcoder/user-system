@@ -11,6 +11,8 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import doRegisterAction from "../actions/doRegisterAction";
+import {Alert, AlertTitle} from '@material-ui/lab';
+
 
 function Copyright() {
   return (
@@ -58,6 +60,8 @@ export default function SignUp() {
   const [emailError, setEmailError] = useState('');
   const [phoneError, setPhoneError] = useState('');
   
+  const [success, setSuccess] = useState(false);
+  
   
   const onSubmit = (e) => {
     e.preventDefault();
@@ -66,7 +70,13 @@ export default function SignUp() {
   
   const onSuccess = (d) => {
     const {data} = d;
-    const {errors} = data;
+    const {errors, status} = data;
+    if (status) {
+      setSuccess(true);
+      setTimeout(() => {
+        window.location = '/login';
+      }, 3000)
+    }
     const {contactError, passwordError, emailError, usernameError} = errors;
     if (contactError.length) {
       setPhoneError(contactError);
@@ -185,6 +195,10 @@ export default function SignUp() {
       </div>
       <Box mt={5}>
         <Copyright/>
+        {success && <Alert severity="success">
+          <AlertTitle>Registration Successful</AlertTitle>
+          You have successfully registered. Redirecting you to the login page.
+        </Alert>}
       </Box>
     </Container>
   );
