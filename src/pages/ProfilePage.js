@@ -26,9 +26,16 @@ class ProfilePage extends React.Component {
         data: data
       })
     }
-    
+  
   }
   
+  mystyle = {
+    color: "white",
+    backgroundColor: "DodgerBlue",
+    padding: "10px",
+    fontFamily: "Arial",
+    textAlign: "center"
+  };
   
   componentDidMount() {
     const access_token = readCookie('access_token');
@@ -41,7 +48,9 @@ class ProfilePage extends React.Component {
   render() {
     const access_token = readCookie('access_token');
     return (access_token &&
-      <UserCard data={this.state.data}/>
+      <div style={this.mystyle}>
+        <UserCard data={this.state.data}/>
+      </div>
     )
   }
 }

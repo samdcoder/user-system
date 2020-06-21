@@ -1,4 +1,5 @@
 import {readCookie} from "../helper";
+import {getUrl} from "../config";
 
 var axios = require('axios');
 var qs = require('qs');
@@ -6,9 +7,11 @@ var data = qs.stringify({});
 
 export default (d, onSuccess) => {
   const userId = readCookie('user_id');
+  const url = getUrl() + `php-mvc/user/profile/${userId}`;
+  
   var config = {
     method: 'post',
-    url: `http://localhost/php-mvc/user/profile/${userId}`,
+    url: url,
     headers: {
       'x-access_token': readCookie('access_token'),
     },

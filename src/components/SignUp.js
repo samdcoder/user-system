@@ -77,7 +77,7 @@ export default function SignUp() {
         window.location = '/login';
       }, 3000)
     }
-    const {contactError, passwordError, emailError, usernameError} = errors;
+    const {contactError = '', passwordError = '', emailError = '', usernameError = ''} = errors || {};
     if (contactError.length) {
       setPhoneError(contactError);
     }

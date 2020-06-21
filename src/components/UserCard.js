@@ -10,6 +10,8 @@ import {deleteCookie} from "../helper";
 const useStyles = makeStyles({
   root: {
     minWidth: 100,
+    marginTop: 200,
+    textAlign: "center",
   },
   bullet: {
     display: 'inline-block',
@@ -41,10 +43,10 @@ export default function UserCard(props) {
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
-        
         <Typography variant="h5" component="h2">
           Hello {username}
         </Typography>
+        <br/>
         <Typography className={classes.pos} color="textSecondary">
           Your Contact: {contact}
         </Typography>
@@ -53,7 +55,7 @@ export default function UserCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={logout}>Logout</Button>
+        <Button size="small" style={{marginLeft: 'auto'}} onClick={logout}>Logout</Button>
       </CardActions>
     </Card>
   );

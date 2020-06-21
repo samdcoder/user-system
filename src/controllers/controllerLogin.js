@@ -1,3 +1,5 @@
+import {getUrl} from "../config";
+
 var axios = require('axios');
 var qs = require('qs');
 
@@ -7,10 +9,10 @@ export default (d, onSuccess) => {
     username,
     password,
   });
-  
+  const url = getUrl() + '/php-mvc/user/login'
   var config = {
     method: 'post',
-    url: 'http://localhost/php-mvc/user/login',
+    url: url,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
