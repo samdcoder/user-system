@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,6 +10,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import doRegisterAction from "../actions/doRegisterAction";
 
 function Copyright() {
   return (
@@ -44,8 +45,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 export default function SignUp() {
   const classes = useStyles();
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  
+  
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log('userName => ', userName);
+    console.log('userName => ', password);
+    console.log('userName => ', email);
+    console.log('userName => ', phone);
+    doRegisterAction({userName, password, email, phone})
+  }
   
   return (
     <Container component="main" maxWidth="xs">
@@ -61,6 +77,7 @@ export default function SignUp() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+                onChange={e => setUserName(e.target.value)}
                 autoComplete="uname"
                 name="userName"
                 variant="outlined"
@@ -73,6 +90,7 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                onChange={e => setPassword(e.target.value)}
                 variant="outlined"
                 required
                 fullWidth
@@ -85,6 +103,7 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                onChange={e => setEmail(e.target.value)}
                 variant="outlined"
                 required
                 fullWidth
@@ -96,6 +115,7 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                onChange={e => setPhone(e.target.value)}
                 type="number"
                 autoComplete="pnumber"
                 name="phoneNumber"
@@ -109,6 +129,7 @@ export default function SignUp() {
             </Grid>
           </Grid>
           <Button
+            onClick={onSubmit}
             type="submit"
             fullWidth
             variant="contained"
